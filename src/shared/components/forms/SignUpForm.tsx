@@ -1,14 +1,17 @@
-// src/shared/components/SignUpForm.tsx
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import {AppDispatch, RootState} from "../../../app/store/store.ts";
 import {signupAsync} from "../../../app/store/slice/authSlice.ts";
+import {Field, Fieldset, Input, Label, Legend} from '@headlessui/react';
+import clsx from 'clsx';
 
 const SignUpForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { isLoading, error } = useSelector((state: RootState) => state.auth);
+    const navigate = useNavigate();
+    const {isLoading, error} = useSelector((state: RootState) => state.auth);
 
-    const [name, setName] = useState<string>('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
@@ -18,7 +21,6 @@ const SignUpForm: React.FC = () => {
         e.preventDefault();
         setLocalError('');
 
-        // Controlli di base
         if (password !== confirmPass) {
             setLocalError('Le password non coincidono!');
             return;
@@ -28,58 +30,104 @@ const SignUpForm: React.FC = () => {
             return;
         }
 
-        dispatch(signupAsync({name, email, password }));
+        dispatch(signupAsync({name, email, password}));
     };
 
     return (
-        <form onSubmit={handleSignUp} className="flex flex-col space-y-4">
-            {(error || localError) && (
-                <div className="text-red-500">{error || localError}</div>
-            )}
+        <form onSubmit={handleSignUp} className="w-full max-w-lg px-4">
+            <Fieldset className="space-y-6">
+                <Legend className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    Crea un nuovo account
+                </Legend>
 
-            <input
-                type="text"
-                placeholder="Nome"
-                className="border p-2 rounded dark:bg-gray-700 dark:text-gray-200"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-            />
+                {/* Campo Nome */}
+                <Field>
+                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">Nome</Label>
+                    <Input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        className={clsx(
+                            'mt-2 block w-full rounded-lg border p-2 dark:bg-gray-700 dark:text-gray-100',
+                            'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-green-500'
+                        )}
+                    />
+                </Field>
 
-            <input
-                type="email"
-                placeholder="Email"
-                className="border p-2 rounded dark:bg-gray-700 dark:text-gray-200"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
+                {/* Campo Email */}
+                <Field>
+                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">Email</Label>
+                    <Input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className={clsx(
+                            'mt-2 block w-full rounded-lg border p-2 dark:bg-gray-700 dark:text-gray-100',
+                            'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-green-500'
+                        )}
+                    />
+                </Field>
 
-            <input
-                type="password"
-                placeholder="Password"
-                className="border p-2 rounded dark:bg-gray-700 dark:text-gray-200"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-            />
+                {/* Campo Password */}
+                <Field>
+                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">Password</Label>
+                    <Input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        className={clsx(
+                            'mt-2 block w-full rounded-lg border p-2 dark:bg-gray-700 dark:text-gray-100',
+                            'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-green-500'
+                        )}
+                    />
+                </Field>
 
-            <input
-                type="password"
-                placeholder="Conferma Password"
-                className="border p-2 rounded dark:bg-gray-700 dark:text-gray-200"
-                value={confirmPass}
-                onChange={(e) => setConfirmPass(e.target.value)}
-                required
-            />
+                {/* Campo Conferma Password */}
+                <Field>
+                    <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">Conferma Password</Label>
+                    <Input
+                        type="password"
+                        value={confirmPass}
+                        onChange={(e) => setConfirmPass(e.target.value)}
+                        required
+                        className={clsx(
+                            'mt-2 block w-full rounded-lg border p-2 dark:bg-gray-700 dark:text-gray-100',
+                            'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-green-500'
+                        )}
+                    />
+                </Field>
 
-            <button
-                type="submit"
-                disabled={isLoading}
-                className="bg-green-600 text-white py-2 rounded hover:bg-green-700 transition-colors"
-            >
-                {isLoading ? 'Creazione in corso...' : 'Crea Account'}
-            </button>
+                {/* Messaggio di errore */}
+                {(error || localError) && (
+                    <div className="text-red-500 text-sm p-2 rounded bg-red-100 dark:bg-red-900 dark:text-red-300">
+                        {error || localError}
+                    </div>
+                )}
+
+                {/* Bottone Sign Up */}
+                <button
+                    type="submit"
+                    disabled={isLoading}
+                    className={clsx(
+                        'w-full py-2 rounded-lg text-white transition-colors',
+                        isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700'
+                    )}
+                >
+                    {isLoading ? 'Creazione in corso...' : 'Crea Account'}
+                </button>
+
+                {/* Switch tra Sign Up e Login */}
+                <button
+                    type="button"
+                    onClick={() => navigate('/login')}
+                    className="w-full mt-2 text-center text-blue-600 dark:text-blue-400 underline"
+                >
+                    Hai già un account? Accedi
+                </button>
+            </Fieldset>
         </form>
     );
 };
