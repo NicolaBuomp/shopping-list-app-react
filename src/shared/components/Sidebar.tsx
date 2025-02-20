@@ -16,24 +16,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     return (
         <aside
             className={`
-    fixed top-16 left-0
-    h-[calc(100%-4rem)]
-    bg-gray-100 dark:bg-gray-900
-    border-r border-gray-200 dark:border-gray-700
-    overflow-x-hidden
-    transition-all duration-300
-    z-40
-    ${
-                isOpen
-                    ? 'w-64'
-                    : 'w-0'           
+        fixed top-16 left-0
+        h-[calc(100%-4rem)]
+        bg-gray-100 dark:bg-gray-900
+        border-r border-gray-200 dark:border-gray-700
+        overflow-x-hidden
+        transition-all duration-300
+        z-40
+        ${
+                // Se la sidebar è aperta, w-64; altrimenti w-0
+                // Se vuoi che su desktop sia sempre aperta, aggiungi:
+                // : "w-0 lg:w-64" se !isOpen
+                isOpen ? 'w-64' : 'w-0'
             }
-    ${
-                !isOpen ? 'lg:w-64' : ''
-            }
-  `}
+      `}
         >
-            {/* Contenuto della sidebar */}
             <nav className="flex flex-col h-full py-4">
                 <Link
                     to="/"
@@ -43,7 +40,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     Home
                 </Link>
 
-                {/* Rotte visibili solo se user è loggato */}
+                {/* Rotte protette se user è loggato */}
                 {user && (
                     <>
                         <Link
@@ -63,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     </>
                 )}
 
-                {/* Se non è loggato, mostra login/signup */}
+                {/* Link pubblici se user non loggato */}
                 {!user && (
                     <>
                         <Link
@@ -83,7 +80,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     </>
                 )}
 
-                {/* Switch del tema in basso */}
                 <div className="mt-auto px-4">
                     <ThemeSwitch />
                 </div>

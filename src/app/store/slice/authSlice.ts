@@ -42,21 +42,20 @@ export const loginAsync = createAsyncThunk(
 
 export const signupAsync = createAsyncThunk(
     'auth/signup',
-    async ({ email, password }: { email: string; password: string }, thunkAPI) => {
+    async ({ name, email, password }: { name: string; email: string; password: string }, thunkAPI) => {
         try {
             const res = await fetch('/api/auth/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ name, email, password }),
             });
             const data = await res.json();
 
             if (!res.ok) {
-                return thunkAPI.rejectWithValue(data.message || 'Errore durante la registrazione');
+                return thunkAPI.rejectWithValue(data.message || 'Errore registrazione');
             }
 
-            // Restituiamo l'oggetto data al reducer
-            return data;
+            return data; // => { user: {id, name, email}, token, ... }
         } catch (err: any) {
             return thunkAPI.rejectWithValue(err.message);
         }

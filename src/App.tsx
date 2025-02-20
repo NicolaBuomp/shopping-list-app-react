@@ -1,48 +1,61 @@
-// src/App.tsx
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-
+import Layout from './shared/layout/Layout';
 import ProtectedRoute from './shared/components/ProtectedRoute';
-import {RootState} from "./app/store/store.ts";
-import LoginPage from "./app/pages/Auth/LoginPage.tsx";
-import Layout from "./shared/layout/Layout.tsx";
-import SignUpPage from "./app/pages/Auth/SignUpPage.tsx";
+import LandingPage from './app/pages/LandingPage';
+import NotFoundPage from './app/pages/NoteFoundPage';
+import { useSelector } from 'react-redux';
+import { RootState } from './app/store/store';
+import { useEffect } from 'react';
 
 function App() {
-    // Leggiamo dallo stato se il tema è 'light' o 'dark'
     const themeMode = useSelector((state: RootState) => state.theme.mode);
 
     useEffect(() => {
-        document.documentElement.classList.toggle('dark', themeMode === 'dark');
+        if (themeMode === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
     }, [themeMode]);
 
     return (
         <BrowserRouter>
             <Routes>
-                {/* Rotta con Layout "base".
-            <Layout> include l'header e un <Outlet /> per il contenuto */}
-                <Route path="/" element={<Layout />}>
-                    {/* Rotta predefinita (index) → HomePage */}
-                    {/*<Route index element={<HomePage />} />*/}
+                {/*
+          Se visiti "/", LandingPage mostra il login di default (o un welcome).
+          "initialMode" = null (puoi interpretarlo come "login" di default).
+        */}
+                <Route path="/" element={<LandingPage />} />
 
-                    {/* Rotte pubbliche */}
-                    <Route path="login" element={<LoginPage />} />
-                    <Route path="/signup" element={<SignUpPage />} />
+                {/*
+          Se visiti "/login", passiamo explicit "initialMode='login'"
+          → la LandingPage apre la sezione login
+        */}
+                <Route path="/login" element={<LandingPage initialMode="login" />} />
 
-                    {/* Rotte protette */}
-                    <Route
-                        path="dashboard"
-                        element={
-                            <ProtectedRoute>
-                                <></>
-                                {/*<DashboardPage />*/}
-                            </ProtectedRoute>
-                        }
-                    />
+                {/*
+          Se visiti "/signup", passiamo explicit "initialMode='signup'"
+          → la LandingPage apre la sezione signup
+        */}
+                <Route path="/signup" element={<LandingPage initialMode="signup" />} />
 
-                </Route>
+                {/*
+          Rotta protetta: /home
+          Se loggato → Layout (sidebar, etc.), altrimenti reindirizza a /login
+        */}
+                <Route
+                    path="/home"
+                    element={
+                        <ProtectedRoute>
+                            <Layout>
+                                {/* <DashboardPage /> */}
+                            </Layout>
+                        </ProtectedRoute>
+                    }
+                />
+
+                {/* Fallback 404 */}
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     );

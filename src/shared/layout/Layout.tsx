@@ -1,28 +1,40 @@
 // src/shared/layout/Layout.tsx
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
 
-const Layout: React.FC = () => {
+interface LayoutProps {
+    children?: React.ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
     // Stato locale che controlla l'apertura della sidebar
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+    // Toggle dell'apertura/chiusura
     const handleToggleSidebar = () => {
         setIsSidebarOpen((prev) => !prev);
     };
 
-    return (
-        <div className="relative min-h-screen">
-            {/* Header in alto */}
-            <Header onHamburgerClick={handleToggleSidebar} />
+    // Chiusura forzata (es. quando clicchi un link nella sidebar)
+    const handleCloseSidebar = () => {
+        setIsSidebarOpen(false);
+    };
 
-            {/* Sidebar laterale */}
-            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-            <div
-                className="pt-16 transition-all duration-300"
-            >
-                <Outlet />
+    return (
+        <div className="flex min-h-screen">
+            {/* Sidebar */}
+            <Sidebar
+                isOpen={isSidebarOpen}
+                onClose={handleCloseSidebar}
+            />
+
+            {/* Contenuto principale */}
+            <div className="flex flex-col flex-1">
+                <Header onHamburgerClick={handleToggleSidebar} />
+                <main className="pt-16 p-4">
+                    {children}
+                </main>
             </div>
         </div>
     );

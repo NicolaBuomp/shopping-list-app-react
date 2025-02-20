@@ -12,7 +12,6 @@ const ThemeSwitch: React.FC = () => {
         dispatch(toggleTheme());
     };
 
-    // Un piccolo switch: “knob” che scorre a sinistra/destra
     const isDark = themeMode === 'dark';
 
     return (
@@ -23,22 +22,19 @@ const ThemeSwitch: React.FC = () => {
                 checked={isDark}
                 onChange={handleToggle}
             />
-            <div className="
-        w-11 h-6
-        bg-gray-200 dark:bg-gray-700
-        peer-focus:outline-none
-        rounded-full
-        peer
-        peer-checked:bg-blue-600
-        peer-checked:dark:bg-blue-800
-        relative
-        transition-colors
-        duration-300
-      "></div>
+            <div
+                className="
+          w-11 h-6
+          bg-gray-200 dark:bg-gray-700
+          rounded-full
+          peer
+          peer-checked:bg-blue-600
+          transition-colors
+          duration-300
+        "
+            ></div>
             <span
                 className="
-          peer-checked:translate-x-5
-          peer-checked:border-white
           absolute left-1 top-1
           w-4 h-4
           bg-white
@@ -46,6 +42,7 @@ const ThemeSwitch: React.FC = () => {
           rounded-full
           transition-transform
           duration-300
+          peer-checked:translate-x-5
         "
             ></span>
         </label>
