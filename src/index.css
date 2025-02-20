@@ -1,105 +1,53 @@
 @import "tailwindcss";
 
 /*
-  Definizione di una custom variant "dark"
-  che si applica a tutti i discendenti di un contenitore con classe .dark
+  Custom variant "dark" applicata ai discendenti di un contenitore con classe .dark
 */
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
-  1) VARIABILI INTERMEDIE A LIVELLO :root
-
-  Qui definisci tutte le variabili "di base" (o "intermedie").
-  Puoi dare loro nomi descrittivi, per esempio "lightBackground",
-  "darkBackground", "brandBlue", ecc.
+  1) Definizione delle variabili base a livello :root
+  Queste variabili rappresentano i valori fondamentali per il design pulito e minimal.
 */
-
 :root {
-    /* ---- Tema Chiaro (intermedie) ---- */
-    --bgLight: #F9FAFB;
-    --bgLightAlt: #F1F5F9;
-    --textLight: #333333;
-    --textLightAlt: #555555;
+    /* Tema Chiaro */
+    --bg-light: #F9F9F9; /* Sfondo molto chiaro */
+    --text-primary-light: #1F2937; /* Testo principale (grigio scuro) */
+    --text-secondary-light: #4B5563; /* Testo secondario (grigio medio) */
+    --accent-light: #5A67D8; /* Colore di accento, un indaco neutro */
+    --border-light: #E5E7EB; /* Bordo e separatori leggeri */
 
-    --primaryLight: #4FC3F7;   /* Ad esempio, un azzurro */
-    --secondaryLight: #ECEFF1;
-    --accentLight1: #B39DDB;
-    --accentLight2: #FFB74D;
-
-    --successLight: #4CAF50;
-    --errorLight: #F44336;
-    --warningLight: #FF9800;
-    --infoLight: #2196F3;
-
-    --brandLight: #0077b6;
-    --borderLight: #DDD;
-
-
-    /* ---- Tema Scuro (intermedie) ---- */
-    --bgDark: #121212;
-    --bgDarkAlt: #1D1D1D;
-    --textDark: #E0E0E0;
-    --textDarkAlt: #AAAAAA;
-
-    --primaryDark: #2979FF;   /* Un blu più brillante */
-    --secondaryDark: #424242;
-    --accentDark1: #E91E63;
-    --accentDark2: #FFB74D;
-
-    --successDark: #66BB6A;
-    --errorDark: #EF5350;
-    --warningDark: #FFA726;
-    --infoDark: #29B6F6;
-
-    --brandDark: #023e8a;
-    --borderDark: #333;
+    /* Tema Scuro */
+    --bg-dark: #1F2937; /* Sfondo scuro, profondo */
+    --text-primary-dark: #F9FAFB; /* Testo principale chiaro */
+    --text-secondary-dark: #D1D5DB; /* Testo secondario (grigio chiaro) */
+    --accent-dark: #A3BFFA; /* Accento più soft per il contrasto su sfondo scuro */
+    --border-dark: #374151; /* Bordo scuro per separazioni */
 }
 
 /*
-  2) MAPPATURE NEI BLOCCHI @theme
-
-  Qui assegni le variabili "finali" di tema
-  (es. --color-light-background) alle variabili intermedie.
+  2) Mappatura finale delle variabili di tema
+  Queste variabili verranno usate per stilizzare l'interfaccia in base al tema attivo.
 */
 
-/* Tema Chiaro */
-@theme {
-    --color-light-background: var(--bgLight);
-    --color-light-background-alt: var(--bgLightAlt);
-    --color-light-text: var(--textLight);
-    --color-light-text-alt: var(--textLightAlt);
-
-    --color-light-primary: var(--primaryLight);
-    --color-light-secondary: var(--secondaryLight);
-    --color-light-accent1: var(--accentLight1);
-    --color-light-accent2: var(--accentLight2);
-
-    --color-light-success: var(--successLight);
-    --color-light-error: var(--errorLight);
-    --color-light-warning: var(--warningLight);
-    --color-light-info: var(--infoLight);
-
-    --color-light-brand: var(--brandLight);
-    --color-light-border: var(--borderLight);
+:root {
+    /* Tema Chiaro */
+    --color-background: #F9F9F9;
+    --color-text-primary: #1F2937;
+    --color-gradient-start: #7F00FF;
+    --color-gradient-end: #EC008C;
+    --color-text-on-gradient: #FFFFFF;
+    --color-card-background: #FFFFFF;
+    --color-card-text: #000000;
 }
 
-/* Tema Scuro */
-@theme dark {
-    --color-dark-background: var(--bgDark);
-    --color-dark-background-alt: var(--bgDarkAlt);
-    --color-dark-text: var(--textDark);
-    --color-dark-text-alt: var(--textDarkAlt);
-
-    --color-dark-primary: var(--primaryDark);
-    --color-dark-secondary: var(--secondaryDark);
-    --color-dark-accent1: var(--accentDark1);
-    --color-dark-accent2: var(--accentDark2);
-
-    --color-dark-success: var(--successDark);
-    --color-dark-error: var(--errorDark);
-    --color-dark-warning: var(--warningDark);
-    --color-dark-info: var(--infoDark);
-
-    --color-dark-brand: var(--brandDark);
-    --color-dark-border: var(--borderDark);
+.dark {
+    /* Tema Scuro */
+    --color-background: #1F2937;
+    --color-text-primary: #F9FAFB;
+    --color-gradient-start: #4B5563;
+    --color-gradient-end: #9CA3AF;
+    --color-text-on-gradient: #F9FAFB;
+    --color-card-background: #1F2937;
+    --color-card-text: #F9FAFB;
 }

@@ -24,7 +24,8 @@ const LandingPage: React.FC<LandingPageProps> = ({initialMode = 'login'}) => {
     const isSignUpMode = location.pathname === '/signup' || initialMode === 'signup';
 
     return (
-        <div className="flex flex-col md:flex-row min-h-screen overflow-hidden relative">
+        <div
+            className="flex flex-col md:flex-row min-h-screen overflow-hidden relative bg-[var(--color-background)] text-[var(--color-text-primary)]">
             {/* Switch tema in alto a destra */}
             <div className="absolute top-4 right-4 z-50">
                 <ThemeSwitch/>
@@ -32,7 +33,7 @@ const LandingPage: React.FC<LandingPageProps> = ({initialMode = 'login'}) => {
 
             {/* Colonna sinistra: gradient + benvenuto */}
             <div
-                className="relative flex-1 bg-gradient-to-r from-purple-600 to-pink-500 p-8 flex flex-col items-center justify-center text-white">
+                className="relative flex-1 bg-[linear-gradient(to_right,var(--color-gradient-start),var(--color-gradient-end))] p-8 flex flex-col items-center justify-center text-[var(--color-text-on-gradient)]">
                 <div className="max-w-md text-center">
                     <h1 className="text-4xl font-bold mb-4">Benvenuto su Shopping List!</h1>
                     <p className="text-lg">
@@ -42,13 +43,13 @@ const LandingPage: React.FC<LandingPageProps> = ({initialMode = 'login'}) => {
 
                 {/* --- Mobile: Form con Card --- */}
                 <div
-                    className="w-full max-w-sm mt-8 md:hidden bg-white dark:bg-gray-900 text-black dark:text-gray-100 shadow-lg p-6 rounded-xl">
+                    className="w-full max-w-sm mt-8 md:hidden bg-[var(--color-card-background)] text-[var(--color-card-text)] shadow-lg p-6 rounded-xl">
                     {isSignUpMode ? <SignUpForm/> : <LoginForm/>}
                 </div>
             </div>
 
             {/* --- Desktop: Form senza Card --- */}
-            <div className="hidden md:flex w-1/2 items-center dark:bg-gray-900 justify-center p-8">
+            <div className="hidden md:flex w-1/2 items-center bg-[var(--color-card-background)] justify-center p-8">
                 <div className="w-full max-w-sm">
                     {isSignUpMode ? <SignUpForm/> : <LoginForm/>}
                 </div>
