@@ -1,53 +1,42 @@
 @import "tailwindcss";
 
-/*
-  Custom variant "dark" applicata ai discendenti di un contenitore con classe .dark
-*/
-@custom-variant dark (&:where(.dark, .dark *));
+@theme {
+    /* Variabili di default (Tema Chiaro) */
+    --color-primary: var(--theme-color-primary);
+    --color-secondary: var(--theme-color-secondary);
+    --color-accent: var(--theme-color-accent);
 
-/*
-  1) Definizione delle variabili base a livello :root
-  Queste variabili rappresentano i valori fondamentali per il design pulito e minimal.
-*/
-:root {
-    /* Tema Chiaro */
-    --bg-light: #F9F9F9; /* Sfondo molto chiaro */
-    --text-primary-light: #1F2937; /* Testo principale (grigio scuro) */
-    --text-secondary-light: #4B5563; /* Testo secondario (grigio medio) */
-    --accent-light: #5A67D8; /* Colore di accento, un indaco neutro */
-    --border-light: #E5E7EB; /* Bordo e separatori leggeri */
-
-    /* Tema Scuro */
-    --bg-dark: #1F2937; /* Sfondo scuro, profondo */
-    --text-primary-dark: #F9FAFB; /* Testo principale chiaro */
-    --text-secondary-dark: #D1D5DB; /* Testo secondario (grigio chiaro) */
-    --accent-dark: #A3BFFA; /* Accento più soft per il contrasto su sfondo scuro */
-    --border-dark: #374151; /* Bordo scuro per separazioni */
+    --color-bg: var(--theme-color-bg);
+    --color-bg-soft: var(--theme-color-bg-soft);
+    --color-text: var(--theme-color-text);
+    --color-text-soft: var(--theme-color-text-soft);
+    --color-border: var(--theme-color-border);
 }
 
-/*
-  2) Mappatura finale delle variabili di tema
-  Queste variabili verranno usate per stilizzare l'interfaccia in base al tema attivo.
-*/
+@layer base {
+    :root {
+        /* 🌞 Tema Chiaro (Default) */
+        --theme-color-primary: #10b981; /* Verde brillante */
+        --theme-color-secondary: #f3f4f6; /* Grigio molto chiaro per input */
+        --theme-color-accent: #16a34a; /* Verde leggermente più scuro */
 
-:root {
-    /* Tema Chiaro */
-    --color-background: #F9F9F9;
-    --color-text-primary: #1F2937;
-    --color-gradient-start: #7F00FF;
-    --color-gradient-end: #EC008C;
-    --color-text-on-gradient: #FFFFFF;
-    --color-card-background: #FFFFFF;
-    --color-card-text: #000000;
-}
+        --theme-color-bg: #ffffff; /* Bianco */
+        --theme-color-bg-soft: #f9fafb; /* Grigio chiarissimo */
+        --theme-color-text: #1f2937; /* Grigio scuro per il testo */
+        --theme-color-text-soft: #6b7280; /* Grigio più tenue */
+        --theme-color-border: #e5e7eb; /* Grigio chiaro per i bordi */
+    }
 
-.dark {
-    /* Tema Scuro */
-    --color-background: #1F2937;
-    --color-text-primary: #F9FAFB;
-    --color-gradient-start: #4B5563;
-    --color-gradient-end: #9CA3AF;
-    --color-text-on-gradient: #F9FAFB;
-    --color-card-background: #1F2937;
-    --color-card-text: #F9FAFB;
+    [class="dark"] {
+        /* 🌙 Tema Scuro */
+        --theme-color-primary: #10b981; /* Verde invariato */
+        --theme-color-secondary: #374151; /* Grigio scuro per input */
+        --theme-color-accent: #16a34a; /* Verde leggermente più scuro */
+
+        --theme-color-bg: #1f2937; /* Grigio scuro */
+        --theme-color-bg-soft: #111827; /* Grigio più scuro */
+        --theme-color-text: #f9fafb; /* Testo chiaro */
+        --theme-color-text-soft: #9ca3af; /* Testo grigio più morbido */
+        --theme-color-border: #374151; /* Bordo scuro */
+    }
 }
